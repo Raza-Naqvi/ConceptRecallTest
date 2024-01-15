@@ -16,7 +16,6 @@ exports.signUp = async (req, res) => {
             email: req.body.email,
             password: pswd,
         };
-        console.log(data, req.body.password, pswd, salt);
         const result = await registerUser(data);
         return successResponse(req, res, result);
     } catch (error) {

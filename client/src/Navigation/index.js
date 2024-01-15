@@ -6,6 +6,7 @@ import Login from '../Screens/Login';
 import Register from '../Screens/Register';
 import Dashboard from '../Screens/Dashboard';
 import { useSelector } from 'react-redux';
+import ChatScreen from '../Screens/ChatScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -13,6 +14,7 @@ const UserNav = () => {
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName={'Dashboard'}>
             <Stack.Screen name="Dashboard" component={Dashboard} />
+            <Stack.Screen name="ChatScreen" component={ChatScreen} />
         </Stack.Navigator>
     )
 }

@@ -1,3 +1,4 @@
+import { Alert } from "react-native";
 import API from "../../../Constants/API";
 import { LoginUser, TokenId, UserDetail } from "../../Reducers/AuthReducer/AuthReducer";
 
@@ -46,7 +47,45 @@ const LoginUserApi = async (data, dispatch, setLoad) => {
         });
 };
 
+const CreateGroup = async (data, setLoad, nav, token, setModalVisible) => {
+    await API.post(`myChat/newChat`, data, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    })
+        .then(e => {
+            setLoad(false);
+            if (e.data.success) {
+                setModalVisible(false);
+                nav.navigate('ChatScreen', { name: e.data.data.successResult.groupName });
+            } else {
+                Alert.alert('Try a unique group name')
+            };
+        })
+        .catch(err => {
+            console.log("CreateGroup error", err);
+            setLoad(false);
+        });
+};
+
+const getMyChats = async (setChats, setLoad, token) => {
+    await API.get('myChat/myChats', {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }).then(e => {
+        setLoad(false);
+        if (e.data.success) {
+            setChats(e.data.data.successResult);
+        };
+    }).catch(err => {
+        console.log('getMyChats err', err);
+    });
+};
+
 export {
+    getMyChats,
+    CreateGroup,
     registerUser,
     LoginUserApi,
 };
